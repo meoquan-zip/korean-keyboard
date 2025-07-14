@@ -15,20 +15,16 @@ class KoreanKeyboard:
     def __str__(self):
         return self.string + self.cursor
 
+    def __repr__(self):
+        return (f'{self.__class__.__name__}'
+                f'(string={self.string!r},'
+                f' cursor={self.cursor!r})')
+
     def __merge(self, h1: str, h2: str) -> str | None:
         return self.__mergemap.get((h1, h2))
 
     def __split(self, hangul: str) -> tuple[str, str] | None:
         return self.__splitmap.get(hangul)
-
-    def _get_properties(self):
-        return (
-            self.__keymap.copy(),
-            self.__consonants.copy(),
-            self.__vowels.copy(),
-            self.__mergemap.copy(),
-            self.__splitmap.copy()
-        )
 
     def input(self, text: str):
         for char in text:
