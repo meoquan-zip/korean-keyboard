@@ -1,1 +1,3 @@
-from .korean_keyboard import KoreanKeyboard
+from ._korean_keyboard import KoreanKeyboard
+
+__all__ = ['KoreanKeyboard']

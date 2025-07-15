@@ -1,4 +1,4 @@
-from .load_data import load_keymap, load_consonants, load_vowels, load_mergemap
+from ._load_data import load_keymap, load_consonants, load_vowels, load_mergemap
 
 
 class KoreanKeyboard:
