@@ -1,55 +1,61 @@
-import os
-import sqlite3
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'hangul.db')
-
-
-def load_keymap() -> dict[str, str]:
-    con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
-    cur.execute("""
-        SELECT key, hangul
-        FROM letters
-    """)
-    keymap = {key: hangul for key, hangul in cur.fetchall()}
-    con.close()
-    return keymap
-
-
-def load_consonants() -> set[str]:
-    con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
-    cur.execute("""
-        SELECT DISTINCT hangul
-        FROM letters
-        WHERE type = 'consonant'
-    """)
-    consonants = {row[0] for row in cur.fetchall()}
-    con.close()
-    return consonants
-
-
-def load_vowels() -> set[str]:
-    con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
-    cur.execute("""
-        SELECT DISTINCT hangul
-        FROM letters
-        WHERE type = 'vowel'
-    """)
-    vowels = {row[0] for row in cur.fetchall()}
-    con.close()
-    return vowels
+def load_keymap() -> dict[str, tuple[str, tuple[str]]]:
+    return {
+        'r': ('ㄱ', ('ini', 'fin')), 'R': ('ㄲ', ('ini', 'fin')),
+        's': ('ㄴ', ('ini', 'fin')), 'S': ('ㄴ', ('ini', 'fin')),
+        'e': ('ㄷ', ('ini', 'fin')), 'E': ('ㄸ', 'ini'),
+        'f': ('ㄹ', ('ini', 'fin')), 'F': ('ㄹ', ('ini', 'fin')),
+        'a': ('ㅁ', ('ini', 'fin')), 'A': ('ㅁ', ('ini', 'fin')),
+        'q': ('ㅂ', ('ini', 'fin')), 'Q': ('ㅃ', 'ini'),
+        't': ('ㅅ', ('ini', 'fin')), 'T': ('ㅆ', ('ini', 'fin')),
+        'd': ('ㅇ', ('ini', 'fin')), 'D': ('ㅇ', ('ini', 'fin')),
+        'w': ('ㅈ', ('ini', 'fin')), 'W': ('ㅉ', 'ini'),
+        'c': ('ㅊ', ('ini', 'fin')), 'C': ('ㅊ', ('ini', 'fin')),
+        'z': ('ㅋ', ('ini', 'fin')), 'Z': ('ㅋ', ('ini', 'fin')),
+        'x': ('ㅌ', ('ini', 'fin')), 'X': ('ㅌ', ('ini', 'fin')),
+        'v': ('ㅍ', ('ini', 'fin')), 'V': ('ㅍ', ('ini', 'fin')),
+        'g': ('ㅎ', ('ini', 'fin')), 'G': ('ㅎ', ('ini', 'fin')),
+        'k': ('ㅏ', ('med',)), 'K': ('ㅏ', ('med',)),
+        'o': ('ㅐ', ('med',)), 'i': ('ㅑ', ('med',)),
+        'I': ('ㅑ', ('med',)), 'O': ('ㅒ', ('med',)),
+        'j': ('ㅓ', ('med',)), 'J': ('ㅓ', ('med',)),
+        'p': ('ㅔ', ('med',)), 'u': ('ㅕ', ('med',)),
+        'U': ('ㅕ', ('med',)), 'P': ('ㅖ', ('med',)),
+        'h': ('ㅗ', ('med',)), 'H': ('ㅗ', ('med',)),
+        'y': ('ㅛ', ('med',)), 'Y': ('ㅛ', ('med',)),
+        'n': ('ㅜ', ('med',)), 'N': ('ㅜ', ('med',)),
+        'b': ('ㅠ', ('med',)), 'B': ('ㅠ', ('med',)),
+        'm': ('ㅡ', ('med',)), 'M': ('ㅡ', ('med',)),
+        'l': ('ㅣ', ('med',)), 'L': ('ㅣ', ('med',))
+    }
 
 
-def load_mergemap() -> dict[tuple[str, str], str]:
-    con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
-    cur.execute("""
-        SELECT *
-        FROM merge_table
-    """)
-    mergemap = {(h1, h2): hangul for h1, h2, hangul in cur.fetchall()}
-    con.close()
-    return mergemap
+def load_initials() -> dict[str, int]:
+    return {c: i for i, c in enumerate(
+        'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ'
+    )}
+
+
+def load_medials() -> dict[str, int]:
+    return {c: i for i, c in enumerate(
+        'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ'
+    )}
+
+
+def load_finals() -> dict[str | None, int]:
+    return {c: i for i, c in enumerate(
+        [None] + list('ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ')
+    )}
+
+
+def load_bindmap() -> dict[tuple[str, str], str]:
+    return {
+        ('ㄱ', 'ㅅ'): 'ㄳ', ('ㄴ', 'ㅈ'): 'ㄵ',
+        ('ㄴ', 'ㅎ'): 'ㄶ', ('ㄹ', 'ㄱ'): 'ㄺ',
+        ('ㄹ', 'ㅁ'): 'ㄻ', ('ㄹ', 'ㅂ'): 'ㄼ',
+        ('ㄹ', 'ㅅ'): 'ㄽ', ('ㄹ', 'ㅌ'): 'ㄾ',
+        ('ㄹ', 'ㅍ'): 'ㄿ', ('ㄹ', 'ㅎ'): 'ㅀ',
+        ('ㅂ', 'ㅅ'): 'ㅄ', ('ㅗ', 'ㅏ'): 'ㅘ',
+        ('ㅗ', 'ㅐ'): 'ㅙ', ('ㅗ', 'ㅣ'): 'ㅚ',
+        ('ㅜ', 'ㅓ'): 'ㅝ', ('ㅜ', 'ㅔ'): 'ㅞ',
+        ('ㅜ', 'ㅣ'): 'ㅟ', ('ㅡ', 'ㅣ'): 'ㅢ'
+    }

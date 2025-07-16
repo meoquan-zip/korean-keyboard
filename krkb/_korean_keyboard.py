@@ -1,72 +1,118 @@
-from ._load_data import load_keymap, load_consonants, load_vowels, load_mergemap
+from ._load_data import load_keymap, load_initials, load_medials, load_finals, load_bindmap
 
 
-class KoreanKeyboard:
-    def __init__(self, string='', cursor=''):
-        self.__keymap = load_keymap()
-        self.__consonants = load_consonants()
-        self.__vowels = load_vowels()
-        self.__mergemap = load_mergemap()
-        self.__splitmap = {v: k for k, v in self.__mergemap.items()}
-        self.__hasfinal = False
-        self.string = string
-        self.cursor = cursor
+class Keyboard:
+    def __init__(self):
+        self.__KEYMAP = load_keymap()
+        self.__INITIALS = load_initials()
+        self.__MEDIALS = load_medials()
+        self.__FINALS = load_finals()
+        self.__BINDMAP = load_bindmap()
+        self.__SPLITMAP = {v: k for k, v in self.__BINDMAP.items()}
+
+        self._string = ''
+        self._initial = None
+        self._medial = None
+        self._final = None
 
     def __str__(self):
-        return self.string + self.cursor
+        return self._string + self.__compose()
 
     def __repr__(self):
-        return (f'{self.__class__.__name__}'
-                f'(string={self.string!r},'
-                f' cursor={self.cursor!r})')
+        return (f'{self.__class__.__name__}('
+                f'_string={self._string!r}, '
+                f'_buffer={self.__compose()!r})')
 
-    def __merge(self, h1: str, h2: str) -> str | None:
-        return self.__mergemap.get((h1, h2))
+    def __iscomplete(self) -> bool:
+        return self._initial and self._medial
 
-    def __split(self, hangul: str) -> tuple[str, str] | None:
-        return self.__splitmap.get(hangul)
+    def __compose(self) -> str:
+        if not self.__iscomplete():
+            return ''.join(filter(None, [
+                self._initial, self._medial, self._final
+            ]))
+
+        ini = self.__INITIALS[self._initial]
+        med = self.__MEDIALS[self._medial]
+        fin = self.__FINALS[self._final]
+
+        return chr(0xAC00 + ini * 21 * 28 + med * 28 + fin)
+
+    def __flush(self):
+        hangul = self.__compose()
+
+        if hangul:
+            self._string += hangul
+
+        self._initial = None
+        self._medial = None
+        self._final = None
 
     def input(self, text: str):
         for char in text:
-            c = self.__keymap.get(char)
+            entry = self.__KEYMAP.get(char)
 
-            if c is None:
-                self.string += self.cursor + char
-                self.cursor = ''
-                self.__hasfinal = False
+            # not hangul letter typed from keyboard
+            if entry is None:
+                self.__flush()
+                self._string += char
                 continue
 
-            if self.cursor == '':
-                self.cursor = c
-                self.__hasfinal = False
-                continue
+            letter, category = entry
 
-            if self.__hasfinal and c in self.__vowels:
-                h1, h2 = self.__split(self.cursor)
-                self.string += h1
-                self.cursor = h2
-
-            han = self.__merge(self.cursor, c)
-
-            if han is not None:
-                self.cursor = han
-            else:
-                self.string += self.cursor
-                self.cursor = c
-
-            self.__hasfinal = c in self.__consonants and c != self.cursor
-
-    def backspace(self, length=1):
-        for _ in range(length):
-            if self.cursor == '':
-                self.string = self.string[:-1]
-                self.__hasfinal = False
-            else:
-                split = self.__split(self.cursor)
-                if split is None:
-                    self.cursor = ''
-                    self.__hasfinal = False
+            # buffer is empty
+            if not (self._initial or self._medial or self._final):
+                if 'ini' in category:
+                    self._initial = letter
                 else:
-                    self.cursor = split[0]
-                    split = self.__split(self.cursor)
-                    self.__hasfinal = split is not None and split[1] in self.__consonants
+                    self._medial = letter
+                continue
+
+            # buffer has final
+            if self._final:
+                if 'med' in category:
+                    split = self.__SPLITMAP.get(self._final)
+                    if split is None:
+                        tmp = self._final
+                        self._final = None
+                    else:
+                        self._final, tmp = split
+                    self.__flush()
+                    self._initial = tmp
+                    self._medial = letter
+                else:
+                    comb = (self._final, letter)
+                    if comb in self.__BINDMAP:
+                        self._final = self.__BINDMAP[comb]
+                    else:
+                        self.__flush()
+                        self._initial = letter
+                continue
+
+            # buffer has medial, no final
+            if self._medial:
+                if 'fin' in category:
+                    self._final = letter
+                elif 'med' in category:
+                    comb = (self._medial, letter)
+                    if comb in self.__BINDMAP:
+                        self._medial = self.__BINDMAP[comb]
+                    else:
+                        self.__flush()
+                        self._medial = letter
+                else:
+                    self.__flush()
+                    self._initial = letter
+                continue
+
+            # buffer has initial, no medial or final
+            if 'med' in category:
+                self._medial = letter
+            else:
+                comb = (self._initial, letter)
+                if comb in self.__BINDMAP:
+                    self._initial = None
+                    self._final = self.__BINDMAP[comb]
+                else:
+                    self.__flush()
+                    self._initial = letter
