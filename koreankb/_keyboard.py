@@ -23,14 +23,14 @@ class Keyboard:
                 f'_string={self._string!r}, '
                 f'_buffer={self.__compose()!r})')
 
-    def __isempty(self) -> bool:
+    def __is_empty(self) -> bool:
         return not (self._initial or self._medial or self._final)
 
-    def __iscomplete(self) -> bool:
+    def __is_complete(self) -> bool:
         return self._initial and self._medial
 
     def __compose(self) -> str:
-        if not self.__iscomplete():
+        if not self.__is_complete():
             return ''.join(filter(None, [
                 self._initial, self._medial, self._final
             ]))
@@ -64,7 +64,7 @@ class Keyboard:
             letter, category = entry
 
             # buffer is empty
-            if self.__isempty():
+            if self.__is_empty():
                 if 'ini' in category:
                     self._initial = letter
                 else:
@@ -147,4 +147,3 @@ class Keyboard:
 
             # buffer is empty
             self._string = self._string[:-1]
-
