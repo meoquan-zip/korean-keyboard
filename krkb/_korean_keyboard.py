@@ -23,6 +23,9 @@ class Keyboard:
                 f'_string={self._string!r}, '
                 f'_buffer={self.__compose()!r})')
 
+    def __isempty(self) -> bool:
+        return not (self._initial or self._medial or self._final)
+
     def __iscomplete(self) -> bool:
         return self._initial and self._medial
 
@@ -61,7 +64,7 @@ class Keyboard:
             letter, category = entry
 
             # buffer is empty
-            if not (self._initial or self._medial or self._final):
+            if self.__isempty():
                 if 'ini' in category:
                     self._initial = letter
                 else:
@@ -116,3 +119,32 @@ class Keyboard:
                 else:
                     self.__flush()
                     self._initial = letter
+
+    def backspace(self, length=1):
+        for _ in range(length):
+            # buffer has final
+            if self._final:
+                split = self.__SPLITMAP.get(self._final)
+                if split:
+                    self._final = split[0]
+                else:
+                    self._final = None
+                continue
+
+            # buffer has medial, no final
+            if self._medial:
+                split = self.__SPLITMAP.get(self._medial)
+                if split:
+                    self._medial = split[0]
+                else:
+                    self._medial = None
+                continue
+
+            # buffer has initial, no medial or final
+            if self._initial:
+                self._initial = None
+                continue
+
+            # buffer is empty
+            self._string = self._string[:-1]
+
