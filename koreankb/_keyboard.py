@@ -52,6 +52,20 @@ class Keyboard:
         self._final = None
 
     def input(self, text: str):
+        """
+        Processes input text and updates the internal Hangul string.
+
+        This method simulates typing on a Korean keyboard. Each character in the input string is examined individually.
+        If it is a basic English letter (A–Z or a–z), it is mapped to a corresponding Hangul keystroke using the
+        standard Dubeolsik layout and composed into valid syllables. Any other character (such as numbers, punctuation,
+        whitespace, or extended Latin characters) is inserted as-is without modification.
+
+        Parameters:
+            text (str): Input text string.
+
+        Returns:
+            None. Use `str(self)` to view the updated Hangul string.
+        """
         for char in text:
             entry = self.__KEYMAP.get(char)
 
@@ -121,6 +135,19 @@ class Keyboard:
                     self._initial = letter
 
     def backspace(self, length=1):
+        """
+        Deletes input as if pressing the backspace key.
+
+        This method simulates deleting most recent `length` keystrokes. Hangul syllables that are still in the internal
+        buffer are broken down one letter at a time. Once the buffer is empty, additional deletions will directly
+        remove whole characters from the finalised output string.
+
+        Parameters:
+            length (int): The number of keystroke units to delete (default is 1).
+
+        Returns:
+            None. Use `str(self)` to view the updated Hangul string.
+        """
         for _ in range(length):
             # buffer has final
             if self._final:
