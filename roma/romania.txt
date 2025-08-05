@@ -1,0 +1,97 @@
+b1_fin	b2_ini	b2_med				b1_fin_rom	b2_fin_rom
+ㄱ	ㄴ		학닌	hangnin	ngn	ng	n	TRUE
+ㄱ	ㄹ		학린	hangnin	ngn	ng	n	TRUE
+ㄱ	ㅁ		학민	hangmin	ngm	ng	m	TRUE
+ㄱ	ㅇ		학인	hagin	g	g		TRUE
+ㄱ	ㅎ		학힌	hakin	k	k		TRUE
+ㄲ	ㄴ		핚닌	hangnin	ngn	ng	n	TRUE
+ㄲ	ㅁ		핚민	hangmin	ngm	ng	m	TRUE
+ㄲ	ㅇ		핚인	hakkin	kk	kk		TRUE
+ㄳ	ㄴ		핛닌	hangnin	ngn	ng	n	TRUE
+ㄳ	ㅁ		핛민	hangmin	ngm	ng	m	TRUE
+ㄳ	ㅇ		핛인	haksin	ks	ks		TRUE
+ㄴ	ㄹ		한린	hallin	ll	l	l	TRUE
+ㄵ	ㅇ		핝인	hanjin	nj	nj		TRUE
+ㄵ	ㅎ		핝힌	hanchin	nch	nch		TRUE
+ㄶ	ㄱ		핞긴	hankin	nk	n	k	TRUE
+ㄶ	ㄷ		핞딘	hantin	nt	n	t	TRUE
+ㄶ	ㅈ		핞진	hanchin	nch	n	ch	TRUE
+ㄷ	ㄴ		핟닌	hannin	nn	n	n	TRUE
+ㄷ	ㅁ		핟민	hanmin	nm	n	m	TRUE
+ㄷ	ㅇ		핟안	hadan	d	d		TRUE
+ㄷ	ㅇ	ㅣ	핟인	hajin	j	j		TRUE
+ㄷ	ㅎ		핟힌	hatin	t	t		TRUE
+ㄹ	ㄴ		할닌	hallin	ll	l	l	TRUE
+ㄹ	ㄹ		할린	hallin	ll	l	l	TRUE
+ㄹ	ㅇ		할인	harin	r	r		TRUE
+ㄺ	ㄴ		핡닌	hangnin	ngn	ng	n	TRUE
+ㄺ	ㅁ		핡민	hangmin	ngm	ng	m	TRUE
+ㄺ	ㅇ		핡인	halgin	lg	lg		TRUE
+ㄺ	ㅎ		핡힌	halkin	lk	lk		TRUE
+ㄻ	ㄹ		핢린	hamnin	mn	m	n	TRUE
+ㄻ	ㅇ		핢인	halmin	lm	lm		TRUE
+ㄼ	ㄴ		핣닌	hamnin	mn	m	n	TRUE
+ㄼ	ㅁ		핣민	hammin	mm	m	m	TRUE
+ㄼ	ㅇ		핣인	halbin	lb	lb		TRUE
+ㄼ	ㅎ		핣힌	halpin	lp	lp		TRUE
+ㄽ	ㅇ		핤인	halsin	ls	ls		TRUE
+ㄾ	ㅇ		핥안	haltan	lt	lt		TRUE
+ㄾ	ㅇ	ㅣ	핥인	halchin	lch	lch		TRUE
+ㄿ	ㄴ		핦닌	hamnin	mn	m	n	TRUE
+ㄿ	ㅁ		핦민	hammin	mm	m	m	TRUE
+ㄿ	ㅇ		핦인	halpin	lp	lp		TRUE
+ㅀ	ㄱ		핧긴	halkin	lk	l	k	TRUE
+ㅀ	ㄷ		핧딘	haltin	lt	l	t	TRUE
+ㅀ	ㅇ		핧인	harin	r	r		TRUE
+ㅀ	ㅈ		핧진	halchin	lch	l	ch	TRUE
+ㅁ	ㄹ		함린	hamnin	mn	m	n	TRUE
+ㅂ	ㄴ		합닌	hamnin	mn	m	n	TRUE
+ㅂ	ㄹ		합린	hamnin	mn	m	n	TRUE
+ㅂ	ㅁ		합민	hammin	mm	m	m	TRUE
+ㅂ	ㅇ		합인	habin	b	b		TRUE
+ㅂ	ㅎ		합힌	hapin	p	p		TRUE
+ㅄ	ㄴ		핪닌	hamnin	mn	m	n	TRUE
+ㅄ	ㅁ		핪민	hammin	mm	m	m	TRUE
+ㅄ	ㅇ		핪인	hapsin	ps	ps		TRUE
+ㅅ	ㄴ		핫닌	hannin	nn	n	n	TRUE
+ㅅ	ㅁ		핫민	hanmin	nm	n	m	TRUE
+ㅅ	ㅇ		핫인	hasin	s	s		TRUE
+ㅅ	ㅎ		핫힌	hatin	t	t		TRUE
+ㅆ	ㄴ		핬닌	hannin	nn	n	n	TRUE
+ㅆ	ㅁ		핬민	hanmin	nm	n	m	TRUE
+ㅆ	ㅇ		핬인	hassin	ss	ss		TRUE
+ㅇ	ㄹ		항린	hangnin	ngn	ng	n	TRUE
+ㅈ	ㄴ		핮닌	hannin	nn	n	n	TRUE
+ㅈ	ㅁ		핮민	hanmin	nm	n	m	TRUE
+ㅈ	ㅇ		핮인	hajin	j	j		TRUE
+ㅈ	ㅎ		핮힌	hachin	ch	ch		TRUE
+ㅊ	ㄴ		핯닌	hannin	nn	n	n	TRUE
+ㅊ	ㅁ		핯민	hanmin	nm	n	m	TRUE
+ㅊ	ㅇ		핯인	hachin	ch	ch		TRUE
+ㅊ	ㅎ		핯힌	hatin	t	t		TRUE
+ㅋ	ㄴ		핰닌	hangnin	ngn	ng	n	TRUE
+ㅋ	ㅁ		핰민	hangmin	ngm	ng	m	TRUE
+ㅌ	ㄴ		핱닌	hannin	nn	n	n	TRUE
+ㅌ	ㅁ		핱민	hanmin	nm	n	m	TRUE
+ㅌ	ㅇ	ㅣ	핱인	hachin	ch	ch		TRUE
+ㅍ	ㄴ		핲닌	hamnin	mn	m	n	TRUE
+ㅍ	ㅁ		핲민	hammin	mm	m	m	TRUE
+ㅎ	ㄱ		핳긴	hakin	k		k	TRUE
+ㅎ	ㄲ		핳낀	hakkin	kk		kk	TRUE
+ㅎ	ㄴ		핳닌	hannin	nn	n	n	TRUE
+ㅎ	ㄷ		핳딘	hatin	t		t	TRUE
+ㅎ	ㄸ		핳띤	hattin	tt		tt	TRUE
+ㅎ	ㄹ		핳린	harin	r		r	TRUE
+ㅎ	ㅁ		핳민	hamin	m		m	TRUE
+ㅎ	ㅂ		핳빈	habin	b		b	TRUE
+ㅎ	ㅃ		핳삔	happin	pp		pp	TRUE
+ㅎ	ㅅ		핳신	hasin	s		s	TRUE
+ㅎ	ㅆ		핳씬	hassin	ss		ss	TRUE
+ㅎ	ㅇ		핳인	hain				TRUE
+ㅎ	ㅈ		핳진	hachin	ch		ch	TRUE
+ㅎ	ㅉ		핳찐	hajjin	jj		jj	TRUE
+ㅎ	ㅊ		핳친	hachin	ch		ch	TRUE
+ㅎ	ㅋ		핳킨	hakin	k		k	TRUE
+ㅎ	ㅌ		핳틴	hatin	t		t	TRUE
+ㅎ	ㅍ		핳핀	hapin	p		p	TRUE
+ㅎ	ㅎ		핳힌	hahin	h		h	TRUE
