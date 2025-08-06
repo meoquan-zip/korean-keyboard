@@ -2,7 +2,7 @@ from ._load_data import load_keymap, load_initials, load_medials, load_finals, l
 
 
 class Keyboard:
-    def __init__(self):
+    def __init__(self, korean_mode: bool = True):
         self.__KEYMAP = load_keymap()
         self.__INITIALS = load_initials()
         self.__MEDIALS = load_medials()
@@ -14,6 +14,8 @@ class Keyboard:
         self._initial = None
         self._medial = None
         self._final = None
+
+        self.korean_mode = korean_mode
 
     def __str__(self):
         return self._string + self.__compose()
@@ -80,13 +82,31 @@ class Keyboard:
         self._medial = None
         self._final = None
 
+    def toggle_input_mode(self) -> bool:
+        """Toggles between Korean input mode and raw input mode.
+
+        When Korean mode is enabled, alphabetical keystrokes (A–Z, a–z) will be interpreted as Korean letters based on
+        the Dubeolsik layout and composed into Hangul syllables. When disabled, input is inserted directly without
+        conversion.
+
+        Returns:
+            bool: The updated value of `self.korean_mode` after toggling.
+        """
+        self.korean_mode = not self.korean_mode
+        return self.korean_mode
+
     def input(self, text: str) -> None:
         """Processes input text and updates the internal Hangul string.
 
-        This method simulates typing on a Korean keyboard. Each character in the input string is examined individually.
-        If it is a basic English letter (A–Z or a–z), it is mapped to a corresponding Hangul keystroke using the
-        standard Dubeolsik layout and composed into valid syllables. Any other character (such as numbers, punctuation,
-        whitespace, or extended Latin characters) is inserted as-is without modification.
+        This method simulates typing on a Korean keyboard. Behaviour depends on the current input mode.
+
+        When Korean mode is enabled (`self.korean_mode` is True), each character in the input string is examined
+        individually. If it is a basic English letter (A–Z or a–z), it is mapped to a corresponding Hangul keystroke
+        using the standard Dubeolsik layout and composed into valid syllables. Any other character (such as numbers,
+        punctuation, whitespace, or extended Latin characters) is inserted as-is without modification.
+
+        When Korean mode is disabled (`self.korean_mode` is False), all input is treated as raw text and appended
+        directly without conversion.
 
         Args:
             text (str): Input text string.
@@ -94,6 +114,11 @@ class Keyboard:
         Returns:
             None: Use `str(self)` to view the updated Hangul string.
         """
+        if not self.korean_mode:
+            self.__flush()
+            self._string += text
+            return
+
         for char in text:
             entry = self.__KEYMAP.get(char)
 
@@ -162,7 +187,7 @@ class Keyboard:
                     self.__flush()
                     self._initial = letter
 
-    def backspace(self, length=1) -> None:
+    def backspace(self, length: int = 1) -> None:
         """Deletes input and updates the internal Hangul string.
 
         This method simulates deleting most recent `length` keystrokes as if pressing the backspace key `length` times.
